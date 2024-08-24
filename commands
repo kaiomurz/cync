@@ -1,0 +1,2 @@
+rclone sync ~/obdsidian/Kaiomurz/ googledrive:/cync-test/Kaiomurz
+rclone sync ~/obdsidian/Kaiomurz/ googledrive:/DriveSyncFiles/Kaiomurz
