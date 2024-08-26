@@ -28,9 +28,15 @@ def get_new_hash(source_path: str) -> str:
 
 
 def get_env_vars() -> Tuple[str]:
-    del os.environ["HASHFILE"]
-    del os.environ["LOCAL"]
-    del os.environ["REMOTE"]
+    try:
+        del os.environ["HASHFILE"]
+        del os.environ["LOCAL"]
+        del os.environ["REMOTE"]
+    except KeyError:
+        pass
+    except Exception as e:
+        print(e)
+        raise e
     load_dotenv()
     hashfile = os.environ["HASHFILE"]
     local = os.environ["LOCAL"]
@@ -58,5 +64,3 @@ if __name__ == "__main__":
         time.sleep(5)
 
 # sync remote to local in the beginning /  every minute
-# provision for situation when changes might have been made when app wasn't running - shouldn't it already happen?
-# just force sync the first time round using sync.sh - use env vars in that file.
