@@ -3,9 +3,9 @@ import os
 import subprocess
 import time
 from datetime import datetime
-import sys
-from dotenv import load_dotenv
 from typing import Tuple
+
+from dotenv import load_dotenv
 
 
 def load_old_hash(hashfile: str) -> str:
@@ -62,5 +62,3 @@ if __name__ == "__main__":
             old_hash = new_hash
             save_hash(old_hash, hashfile=hashfile)
         time.sleep(5)
-
-# sync remote to local in the beginning /  every minute
