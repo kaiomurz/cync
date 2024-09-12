@@ -10,3 +10,7 @@
 - sync remote to local in the beginning /  every minute
 - create initial hashfile
 - redirect rclone output to pop-up
+
+[how can I create a debian package of a python CLI app?](https://www.perplexity.ai/search/how-can-i-create-a-debian-pack-QAmWLZyiTuS9ObG1eLvJPQ)
+
+[Build a Debian package(.deb) from your Python Program](https://www.geeksforgeeks.org/build-a-debian-packagedeb-from-your-python-program/)

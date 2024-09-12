@@ -7,6 +7,9 @@ from typing import Tuple
 
 from dotenv import load_dotenv
 
+REMOTE_TO_LOCAL_TIME = 10 * 60
+LOCAL_TO_REMOTE_TIME = 5
+
 
 def load_old_hash(hashfile: str) -> str:
     with open(hashfile, "r") as f:
@@ -33,7 +36,9 @@ def get_env_vars() -> Tuple[str]:
         del os.environ["LOCAL"]
         del os.environ["REMOTE"]
     except KeyError:
-        pass
+        print(
+            "make sure you have added the HASHFILE, LOCAL, and REMOTE variables in .env"
+        )
     except Exception as e:
         print(e)
         raise e
@@ -44,21 +49,32 @@ def get_env_vars() -> Tuple[str]:
     return hashfile, local, remote
 
 
+def _cync(source: str, dest: str) -> None:
+    print(f"syncing {source} to {dest}")
+    subprocess.run(
+        f"rclone sync {source} {dest}",
+        shell=True,
+    )
+    print("sync complete:", datetime.now())
+
+
 if __name__ == "__main__":
     hashfile, local, remote = get_env_vars()
-    print(local, remote)
+    print(f"local: {local}, remote: {remote}")
+    remote_local_counter = 0
 
     old_hash = load_old_hash(hashfile=hashfile)
 
     while True:
         new_hash = get_new_hash(source_path=local)
+
         if new_hash != old_hash:
-            print(f"rclone sync {local} {remote}")
-            subprocess.run(
-                f"rclone sync {local} {remote}",
-                shell=True,
-            )
-            print(datetime.now())
+            _cync(local, remote)
             old_hash = new_hash
             save_hash(old_hash, hashfile=hashfile)
-        time.sleep(5)
+
+        if remote_local_counter % REMOTE_TO_LOCAL_TIME == 0:
+            _cync(remote, local)
+        remote_local_counter += LOCAL_TO_REMOTE_TIME
+
+        time.sleep(LOCAL_TO_REMOTE_TIME)
