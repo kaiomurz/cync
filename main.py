@@ -50,6 +50,7 @@ def get_env_vars() -> Tuple[str]:
 
 
 def _cync(source: str, dest: str) -> None:
+    """Syncs source to destination using rclone"""
     print(f"syncing {source} to {dest}")
     subprocess.run(
         f"rclone sync {source} {dest}",
