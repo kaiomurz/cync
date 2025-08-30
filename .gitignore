@@ -163,3 +163,6 @@ cython_debug/
 
 # hash file
 hashfile.txt
+
+# VS Code setting
+/.vscode

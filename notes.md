@@ -1,5 +1,6 @@
 # Todo
 - create hashfile if none exists
+- translate to Go or Rust (see [here](https://chatgpt.com/c/6806a434-4de0-8006-8da3-04c5632c21ed) for LLM translation.)
 
 # Questions
 - where would you store it if it was run as a package?

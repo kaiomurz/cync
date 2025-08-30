@@ -23,14 +23,17 @@ def save_hash(hash_string: str, hashfile: str) -> None:
 
 
 def get_new_hash(source_path: str) -> str:
-    listing = subprocess.Popen(
+    output = subprocess.Popen(
         f"tree -s {source_path}", shell=True, stdout=subprocess.PIPE
-    ).stdout.read()
+    ).stdout
+    if output is None:
+        raise ValueError
+    listing = output.read()
     new_hash = hashlib.sha256(str(listing).encode("utf-8")).hexdigest()
     return new_hash
 
 
-def get_env_vars() -> Tuple[str]:
+def get_env_vars() -> Tuple[str, str, str]:
     try:
         del os.environ["HASHFILE"]
         del os.environ["LOCAL"]
